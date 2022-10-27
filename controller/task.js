@@ -37,12 +37,12 @@ class TaskController {
         const page = parseInt(req.body.page)
         const skip = (page - 1) * limit
         let list = await Task.find({expiry: true}).sort({ _id: -1 }).skip(skip).limit(limit)
-        let count = await await Task.find({deleted: false}).countDocuments();
+        let count = await await Task.find({expiry: true}).countDocuments();
         let output = {
             list,
             count,
         }
-        return res.status(200).json({ success: true, data: output, message: "Task Listed !" });
+        return res.status(200).json({ success: true, data: output, message: "Expired Task Listed !" });
     }
 }
 
